@@ -1,4 +1,4 @@
-@import "tailwindCSS";
+@import "tailwindcss";
 
 .linkItem {
     @apply bg-[#F15A24] p-3 rounded-full
