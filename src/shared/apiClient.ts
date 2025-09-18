@@ -64,3 +64,5 @@ apiClient.interceptors.request.use(
         return config;
     }
 );
+
+export default apiClient;
