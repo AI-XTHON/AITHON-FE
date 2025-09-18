@@ -1,8 +1,8 @@
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
-import DummyPage from "./shared/pages/DummyPage";
 import Layout from "./shared/components/Layout";
 import UserInfoPage from "./features/info";
 import Mypage from "./features/mypage";
+import Home from "./features/home";
 
 function App() {
   function isLoggedIn() {
@@ -17,7 +17,7 @@ function App() {
           {/* 비 보호 경로 작성 */}
           <Route path="/login" element={""} />
           {/* <Route path="/oauth/google/redirect" element={<AuthCallbackPage />} /> */}
-          <Route path="/" element={<DummyPage />} />
+          <Route path="/" element={<Home />} />
           <Route path="/onboarding/user-info" element={<UserInfoPage mode="onboarding" />} />
           <Route path="/settings/user-info" element={<UserInfoPage mode="edit" />} />
           <Route path="/mypage" element={<Mypage />} />
