@@ -1,10 +1,27 @@
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 
 function App() {
-
+  function isLoggedIn() {
+    const token = localStorage.getItem("accessToken");
+    return !!token;
+  }
   return (
-    <>
-      App
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={""} />
+        {/* <Route path="/oauth/google/redirect" element={<AuthCallbackPage />} /> */}
+
+        <Route
+          path="/"
+          element={isLoggedIn() ? <Outlet /> : <Navigate to="/login" replace />}
+        >
+          {/* 보호 경로 작성 */}
+        </Route>
+
+        {/* 알 수 없는 경로 처리 */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
