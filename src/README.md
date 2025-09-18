@@ -2,6 +2,7 @@
 1. 홈 : /
 2. 자료 업로드 : /upload
 3. 퀴즈 : /quiz
-4. 전체 메뉴 : /menu
+4. 마이페이지 : /mypage
 5. 온보딩 : /onboarding/user-info
 6. 정보 수정 페이지 : /settings/user-info
+7. 
