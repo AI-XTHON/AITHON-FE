@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import DummyPage from "./shared/pages/DummyPage";
 import Layout from "./shared/components/Layout";
+import UserInfoPage from "./features/info";
 
 function App() {
   function isLoggedIn() {
@@ -8,12 +9,17 @@ function App() {
     return !!token;
   }
   return (
-    <Layout>
-      <BrowserRouter>
+
+    <BrowserRouter>
+      <Layout>
         <Routes>
+          {/* 비 보호 경로 작성 */}
           <Route path="/login" element={""} />
           {/* <Route path="/oauth/google/redirect" element={<AuthCallbackPage />} /> */}
           <Route path="/" element={<DummyPage />} />
+          <Route path="/onboarding/user-info" element={<UserInfoPage mode="onboarding" />} />
+          <Route path="/settings/user-info" element={<UserInfoPage mode="edit" />} />
+
 
           <Route
             path="/"
@@ -25,8 +31,8 @@ function App() {
           {/* 알 수 없는 경로 처리 */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </BrowserRouter>
-    </Layout>
+      </Layout>
+    </BrowserRouter>
   )
 }
 

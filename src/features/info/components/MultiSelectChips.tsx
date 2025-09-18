@@ -1,3 +1,6 @@
+import CheckIcon from '../assets/check.svg';
+import CheckedIcon from '../assets/checked.svg'
+
 type Props = {
     options: string[];
     values: string[];
@@ -16,12 +19,13 @@ export default function MultiSelectChips({ options, values, onToggle }: Props) {
                         onClick={() => onToggle(opt)}
                         aria-pressed={active}
                         className={[
-                            "w-full rounded-lg px-4 py-3 text-sm text-left transition",
+                            "w-full rounded-lg px-4 py-3 text-sm text-left transition flex items-center gap-1",
                             active
-                                ? "bg-orange-500 text-white"
-                                : "bg-gray-200 text-gray-700 hover:bg-gray-300",
+                                ? "bg-[#F15A2478] text-[#F15A24] border border-[#F15A24]"
+                                : "bg-[#9494946B] text-[#585858] hover:bg-gray-300",
                         ].join(" ")}
                     >
+                        <img src={active ? CheckedIcon : CheckIcon} className='w-[24px] h-[24px]' />
                         {opt}
                     </button>
                 );
