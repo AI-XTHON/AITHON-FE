@@ -9,13 +9,16 @@ type Props = {
 
 function ProfileSection({ nickname, position }: Props) {
     return (
-        <section>
-            <img src={profile} alt="프로필" />
-            <div>
-                <p>{nickname}</p>
-                <p>{position}</p>
+        <section className=' relative p-4 pr-10 bg-[#d7dbdc] flex justify-between mb-8'>
+            <div className='flex gap-3'>
+                <img src={profile} alt="프로필" className=' bg-[#9F9F9F] p-4 rounded-2xl' />
+                <div className='p-1'>
+                    <p className='font-bold text-sm mb-1'>{nickname}</p>
+                    <p className='text-xs'>{position}</p>
+                </div>
             </div>
-            <Link to='/settings/user-info'>
+
+            <Link to='/settings/user-info' className=' my-auto h-8 py-1 px-3 bg-[#F15A24]  text-white rounded-lg'>
                 수정
             </Link>
         </section>
