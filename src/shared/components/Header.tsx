@@ -13,12 +13,11 @@ export default function Header({ title }: HeaderProps) {
     };
 
     return (
-        <header className='relative flex items-center px-6 pt-10 pb-6'>
+        <header className='sticky top-0 flex items-center px-6 pt-10 pb-6 h-22 bg-[#d7dbdc]'>
             <button onClick={onClickBackHandler} aria-label="뒤로 가기">
                 <img src={leftArrow} alt="" />
             </button>
             <h1 className="absolute left-2/5 text-2xl font-medium text-[#676767]">{title}</h1>
-            <div />
         </header>
     );
 }
