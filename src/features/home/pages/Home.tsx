@@ -31,7 +31,7 @@ export default function Home() {
                     <p className='text-2xl font-semibold mb-2'>무엇이든 물어봐주세요.</p>
                     <div className='flex items-center gap-2'>
                         {/* TODO : chat Link */}
-                        <Link to='/'><span className='py-4 pl-6 pr-28 bg-white rounded-full w-20 text-[#626262]'>내용을 작성해주세요.</span></Link>
+                        <Link to='/' className='w-2/3'><span className='py-4 pl-6 w-full bg-white rounded-full text-[#626262] block '>내용을 작성해주세요.</span></Link>
                         <Link to='/upload' className='linkItem'><img src={clip} alt="" /></Link>
                         <Link to='/' className='linkItem'><img src={camera} alt="" /></Link>
                     </div>
