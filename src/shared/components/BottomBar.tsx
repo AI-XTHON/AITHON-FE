@@ -48,7 +48,7 @@ export default function BottomBar() {
             <BottomBarItem to="/" icon={home} toggleIcon={toggleHome} label="홈" />
             <BottomBarItem to="/upload" icon={upload} toggleIcon={toggleUpload} label="자료 업로드" />
             <BottomBarItem to="/quiz" icon={quiz} toggleIcon={toggleQuiz} label="퀴즈" />
-            <BottomBarItem to="/menu" icon={menu} toggleIcon={toggleMenu} label="전체 메뉴" />
+            <BottomBarItem to="/mypage" icon={menu} toggleIcon={toggleMenu} label="전체 메뉴" />
         </nav>
     );
 }
