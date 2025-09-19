@@ -9,7 +9,7 @@ export default function Upload() {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [modalOpen, setModalOpen] = useState(false);
-    const [pendingFile, setPendingFile] = useState<File | null>(null);
+    const [, setPendingFile] = useState<File | null>(null);
     const [items, setItems] = useState<SummaryItem[]>(() => dataStore.getAll());
 
     const handleNewClick = useCallback(() => {
@@ -43,8 +43,6 @@ export default function Upload() {
         setModalOpen(false);
         setPendingFile(null);
     }, []);
-
-    const hasItems = useMemo(() => items.length > 0, [items]);
 
     return (
         <div >
