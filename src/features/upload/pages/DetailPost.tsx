@@ -1,11 +1,10 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../../../shared/components/Header";
-import { dataStore } from "../data";
 
 export default function DetailPost() {
     const { id } = useParams<{ id: string }>();
-    const item = useMemo(() => (id ? dataStore.getById(id) : undefined), [id]);
+    const item = useMemo(() => (id ? getById(id) : undefined), [id]);
     const [pageIndex, setPageIndex] = useState(0);
     const touchStartX = useRef<number | null>(null);
 
@@ -57,3 +56,7 @@ export default function DetailPost() {
         </div>
     )
 }
+function getById(id: string): any {
+    throw new Error("Function not implemented.");
+}
+

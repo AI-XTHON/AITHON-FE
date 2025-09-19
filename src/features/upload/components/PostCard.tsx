@@ -2,6 +2,7 @@ import { memo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import type { SummaryItem } from "../data";
 
+
 type Props = { item: SummaryItem };
 
 function DataCardBase({ item }: Props) {
