@@ -26,7 +26,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/onboarding/user-info" element={<UserInfoPage mode="onboarding" />} />
             <Route path="/settings/user-info" element={<UserInfoPage mode="edit" />} />
-            <Route path="/mypage" element={<Mypage />} />
+            <Route path="/mypage/:userId" element={<Mypage />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/upload/:id" element={<DetailPost />} />
           </Route>

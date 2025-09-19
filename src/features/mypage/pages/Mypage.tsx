@@ -7,7 +7,7 @@ import ProfileSection from '../components/ProfileSection'
 import MenuSection from '../components/MenuSection'
 import { logout } from '../utils/logout'
 
-export default function Mypage({ userId }: { userId: number }) {
+export default function Mypage() {
     const [me, setMe] = useState<UserMe | null>(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<Error | null>(null)
@@ -17,7 +17,7 @@ export default function Mypage({ userId }: { userId: number }) {
         let alive = true
         setLoading(true)
         setError(null)
-        getCurrentUser(userId)
+        getCurrentUser()
             .then((data: UserMe) => {
                 if (alive) setMe(data)
             })
@@ -31,12 +31,14 @@ export default function Mypage({ userId }: { userId: number }) {
             })
             .finally(() => { if (alive) setLoading(false) })
         return () => { alive = false }
-    }, [userId, navigate])
+        // 주석: useEffect 의존성 배열에서 userId를 제거합니다.
+    }, [navigate])
 
     const nickname = me?.name ?? '닉네임'
     const position = me?.userType ?? '대학생'
 
     const handleSettings = useCallback(() => {
+        // TODO: 설정 페이지로 이동하는 로직 구현
     }, [])
 
     const handleLogout = useCallback(async () => {
@@ -51,8 +53,13 @@ export default function Mypage({ userId }: { userId: number }) {
                 {loading && <p>불러오는 중</p>}
                 {error && <p>오류: {error.message}</p>}
 
-                <ProfileSection nickname={nickname} position={position} />
-                <MenuSection onLogout={handleLogout} />
+                {/* 주석: me가 null이 아닐 때만 프로필과 메뉴를 렌더링하도록 조건부 렌더링 추가 */}
+                {me && !loading && !error && (
+                    <>
+                        <ProfileSection nickname={nickname} position={position} />
+                        <MenuSection onLogout={handleLogout} />
+                    </>
+                )}
             </main>
             <BottomBar />
         </div>

@@ -1,4 +1,3 @@
-// src/features/users/api/get-me.ts
 import apiClient from '../../../shared/apiClient'
 
 /** 스웨거 응답 래퍼 */
@@ -21,12 +20,11 @@ const ACCESS_TOKEN_KEY = 'accessToken'
  * - 성공: ApiEnvelope<{ name, userType }>
  * - 401: 인증 실패 -> Error('UNAUTHORIZED') throw
  */
-export async function getCurrentUser(userId: number): Promise<UserMe> {
+export async function getCurrentUser(): Promise<UserMe> {
     const token = localStorage.getItem(ACCESS_TOKEN_KEY)
 
     try {
         const res = await apiClient.get<ApiEnvelope<UserMe>>('/api/v1/users/me', {
-            params: { userId },
             headers: token ? { Authorization: `Bearer ${token}` } : {},
         })
         return res.data.data
