@@ -3,6 +3,7 @@ import Layout from "./shared/components/Layout";
 import UserInfoPage from "./features/info";
 import Mypage from "./features/mypage";
 import Home from "./features/home";
+import DummyPage from "./shared/pages/DummyPage";
 
 function App() {
   function isLoggedIn() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/onboarding/user-info" element={<UserInfoPage mode="onboarding" />} />
           <Route path="/settings/user-info" element={<UserInfoPage mode="edit" />} />
           <Route path="/mypage" element={<Mypage />} />
+          <Route path="/dummy" element={<DummyPage />} />
 
 
           <Route
