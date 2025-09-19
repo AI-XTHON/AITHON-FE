@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* .whiteBorder{
+    background: linear-gradient(153.13deg, rgba(255, 255, 255, 0.7) 2.03%, rgba(153, 153, 153, 0.7) 155.19%);
+    border-solid border-white border-t-0 border-l-0 border-r-[1.5px] border-b-[1.5px]
+} */
+
+.whiteBorder {
+  @apply border-solid border-white border-t-0 border-l-0 border-r-[1.5px] border-b-[1.5px] bg-[linear-gradient(153.13deg,rgba(255,255,255,0.7)_2.03%,rgba(153,153,153,0.7)_155.19%)];
+}

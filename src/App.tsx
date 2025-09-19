@@ -3,7 +3,11 @@ import Layout from "./shared/components/Layout";
 import UserInfoPage from "./features/info";
 import Mypage from "./features/mypage";
 import Home from "./features/home";
+import { Upload, DetailPost } from "./features/upload";
+
+// 컴포넌트 테스트 페이지
 import DummyPage from "./shared/pages/DummyPage";
+
 
 function App() {
   function isLoggedIn() {
@@ -23,7 +27,8 @@ function App() {
           <Route path="/settings/user-info" element={<UserInfoPage mode="edit" />} />
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/dummy" element={<DummyPage />} />
-
+          <Route path="/upload" element={<Upload />} />\
+          <Route path="/upload/:id" element={<DetailPost />} />
 
           <Route
             path="/"
