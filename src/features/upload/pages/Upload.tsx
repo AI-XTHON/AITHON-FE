@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 import SearchHeader from "../../../shared/components/SearchHeader";
 import PostCardList from "../components/PostCardList";
