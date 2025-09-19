@@ -18,6 +18,7 @@ export const handleLoginSuccess = (searchParams: URLSearchParams) => {
         localStorage.setItem('accessToken', accessToken);
         if (refreshToken) {
             localStorage.setItem('refreshToken', refreshToken);
+            window.location.href = '/onboarding/user-info';
         }
         return true;
     }
