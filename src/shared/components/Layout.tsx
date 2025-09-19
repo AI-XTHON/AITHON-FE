@@ -13,7 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
         // 화면 전체를 차지하도록 설정
         <div className="flex h-screen w-full items-center justify-center bg-black">
             {/* 실제 앱 콘텐츠가 표시될 영역 */}
-            <main className="relative h-full w-full max-w-md overflow-y-auto bg-[#d7dbdc] hide-scrollbar">
+            <main className="relative h-full w-full max-w-lg overflow-y-auto bg-[#d7dbdc] hide-scrollbar">
                 {children}
             </main>
         </div>

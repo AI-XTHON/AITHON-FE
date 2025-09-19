@@ -38,7 +38,7 @@ export default function Home() {
 
                     <div className=' relative mb-20'>
                         <img src={msg} alt="" className='absolute right-4' />
-                        <p className='absolute right-9 top-7 text-xs'>강의 자료를 올려주세요.</p>
+                        <p className='absolute right-9 top-8 text-base'>강의 자료를 올려주세요.</p>
                     </div>
 
                     <div>

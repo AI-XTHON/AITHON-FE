@@ -4,6 +4,7 @@ import SearchHeader from "../../../shared/components/SearchHeader";
 import PostCardList from "../components/PostCardList";
 import NewFileModal from "../components/NewFileModal";
 import { dataStore, type SummaryItem } from "../data";
+import BottomBar from "../../../shared/components/BottomBar";
 
 export default function Upload() {
 
@@ -74,6 +75,7 @@ export default function Upload() {
                     <PostCardList items={items} />
                 </section>
             </main>
+            <BottomBar />
 
             {/* 제목 입력 모달 */}
             <NewFileModal
