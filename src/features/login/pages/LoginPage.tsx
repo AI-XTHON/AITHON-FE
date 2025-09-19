@@ -6,7 +6,7 @@ type Props = {
   onEmailLogin?: () => void;
 };
 
-const LoginPage: React.FC<Props> = ({ onBack, onEmailLogin }) => {
+const LoginPage: React.FC<Props> = ({ onEmailLogin }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#D9DDDF] p-6">
       {/* Top Bar - Removed as per instruction, assuming shared header */}
