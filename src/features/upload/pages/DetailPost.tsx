@@ -40,7 +40,7 @@ export default function DetailPost() {
             <Header />
             <div className="mt-6 flex justify-center">
                 <div
-                    className="w-11/12 h-[70vh] bg-white rounded-2xl shadow flex items-center justify-center shadow-[0px_4px_4px_0px_#00000040]"
+                    className="w-11/12 h-[70vh] bg-white rounded-2xl flex items-center justify-center shadow-[0px_4px_4px_0px_#00000040]"
                     onClick={handleClick}
                     onTouchStart={onTouchStart}
                     onTouchEnd={onTouchEnd}
