@@ -5,4 +5,5 @@
 4. 마이페이지 : /mypage
 5. 온보딩 : /onboarding/user-info
 6. 정보 수정 페이지 : /settings/user-info
-7. 
+7. 자료 업로드 페이지 : /upload
+8. 자료 상세 보기 : /upload/:id
