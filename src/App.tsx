@@ -1,12 +1,11 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import DummyPage from "./shared/pages/DummyPage";
 import Layout from "./shared/components/Layout";
 import UserInfoPage from "./features/info";
 import Mypage from "./features/mypage";
-
-// Import new pages
+import Home from "./features/home";
 import LoginPage from "./features/login/pages/LoginPage";
 import LoginSuccessPage from "./features/login/pages/LoginSuccessPage";
+import { Upload, DetailPost } from "./features/upload";
 
 // Import route components
 import ProtectedRoute from "./shared/components/ProtectedRoute";
@@ -24,10 +23,12 @@ function App() {
 
           {/* Protected routes */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<DummyPage />} />
+            <Route path="/" element={<Home />} />
             <Route path="/onboarding/user-info" element={<UserInfoPage mode="onboarding" />} />
             <Route path="/settings/user-info" element={<UserInfoPage mode="edit" />} />
             <Route path="/mypage" element={<Mypage />} />
+            <Route path="/upload" element={<Upload />} />
+            <Route path="/upload/:id" element={<DetailPost />} />
           </Route>
 
           {/* Standalone routes */}
