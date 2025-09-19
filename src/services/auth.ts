@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://eduai.com:8080';
 
 export const login = () => {
     window.location.href = `${API_URL}/oauth2/authorization/google`;
