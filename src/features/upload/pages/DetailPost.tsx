@@ -1,120 +1,90 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import SearchHeader from "../../../shared/components/SearchHeader";
-import PostCardList from "../components/PostCardList";
-import NewFileModal from "../components/NewFileModal";
-import BottomBar from "../../../shared/components/BottomBar";
-import { uploadResource } from "../api/resources";
-import { getSummaries, type SummaryListItem } from "../api/getSummaries";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { useParams, useLocation } from "react-router-dom";
+import Header from "../../../shared/components/Header";
 
-type SummaryItem = {
-    id: string;
-    title: string;
-    status: "processing" | "ready";
-    coverText?: string;
-    pages: string[];
-    createdAt: string;
+type SummaryFive = {
+    first?: string;
+    second?: string;
+    third?: string;
+    fourth?: string;
+    fifth?: string;
 };
 
-export default function Upload() {
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const [modalOpen, setModalOpen] = useState(false);
-    const [pendingFile, setPendingFile] = useState<File | null>(null);
-    const [items, setItems] = useState<SummaryItem[]>([]);
+type DetailItem = {
+    id: string;
+    title?: string;
+    pages?: string[];
+    summary?: SummaryFive;
+    createdAt?: string;
+};
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const list = await getSummaries();
-                const mapped: SummaryItem[] = list.map((x: SummaryListItem, idx) => ({
-                    id: String(x.id ?? crypto.randomUUID()),
-                    title: x.title ?? x.oneliner ?? `요약 ${idx + 1}`,
-                    status: "ready",
-                    coverText: x.oneliner ?? "표지 or 첫페이지",
-                    pages: [],
-                    createdAt: x.createdAt ?? new Date().toISOString(),
-                }));
-                setItems(mapped);
-            } catch (e) {
-                console.error(e);
-                // 인증 실패(401) 등은 상위 라우팅에서 처리한다면 알림 생략 가능
+export default function DetailPost() {
+    const { id } = useParams<{ id: string }>();
+    const location = useLocation();
+
+    const item: DetailItem = useMemo(() => {
+        const stateItem = (location.state as any)?.item as DetailItem | undefined;
+        return (
+            stateItem ?? {
+                id: id ?? "",
+                pages: [],
+                summary: {},
             }
-        })();
+        );
+    }, [id, location.state]);
+
+    const [pageIndex, setPageIndex] = useState(0);
+    const touchStartX = useRef<number | null>(null);
+
+    const pageCount = Math.max(1, item?.pages?.length ?? 1);
+    const maxIndex = pageCount - 1;
+
+    const goPrev = useCallback(() => {
+        setPageIndex((p) => Math.max(0, p - 1));
     }, []);
+    const goNext = useCallback(() => {
+        setPageIndex((p) => Math.min(maxIndex, p + 1));
+    }, [maxIndex]);
 
-    const handleNewClick = useCallback(() => {
-        fileInputRef.current?.click();
+    const handleClick = useCallback<React.MouseEventHandler<HTMLDivElement>>((e) => {
+        const { left, width } = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+        const x = e.clientX - left;
+        if (x < width / 2) goPrev(); else goNext();
+    }, [goPrev, goNext]);
+
+    const onTouchStart = useCallback<React.TouchEventHandler<HTMLDivElement>>((e) => {
+        touchStartX.current = e.touches[0].clientX;
     }, []);
+    const onTouchEnd = useCallback<React.TouchEventHandler<HTMLDivElement>>((e) => {
+        if (touchStartX.current == null) return;
+        const delta = e.changedTouches[0].clientX - touchStartX.current;
+        touchStartX.current = null;
+        if (Math.abs(delta) < 40) return;
+        if (delta > 0) goPrev(); else goNext();
+    }, [goPrev, goNext]);
 
-    const handleFileChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>((e) => {
-        const file = e.target.files?.[0] ?? null;
-        if (!file) return;
-        setPendingFile(file);
-        setModalOpen(true);
-        e.currentTarget.value = "";
-    }, []);
-
-    const handleModalClose = useCallback(() => {
-        setModalOpen(false);
-        setPendingFile(null);
-    }, []);
-
-    const handleCreate = useCallback(
-        async (title: string) => {
-            try {
-                if (!pendingFile) return;
-
-                alert("AI 요약이 시작됩니다. 최대 3분 까지 소요됩니다. 완료 후 팝업이 닫히고 자료가 추가됩니다.");
-
-                const resp = await uploadResource(pendingFile, title);
-                const generatedId = typeof resp === "string" ? resp : (resp as any).id ?? crypto.randomUUID();
-
-                const newItem: SummaryItem = {
-                    id: String(generatedId),
-                    title,
-                    status: "processing",
-                    coverText: "요약중...",
-                    pages: [],
-                    createdAt: new Date().toISOString(),
-                };
-
-                setItems((prev) => [newItem, ...prev]);
-                setModalOpen(false);
-                setPendingFile(null);
-            } catch (e) {
-                console.error(e);
-                alert("업로드에 실패했습니다. 잠시 후 다시 시도해 주세요.");
-            }
-        },
-        [pendingFile]
-    );
+    const summary = item.summary ?? {};
 
     return (
         <div>
-            <SearchHeader />
-            <main className="mt-10">
-                <section className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 px-4 place-items-center">
-                    <div className="flex flex-col items-center gap-5">
-                        <button
-                            className="h-60 w-40 border border-dashed rounded-2xl border-[#006FFF] text-8xl text-[#006FFF]"
-                            onClick={handleNewClick}
-                        >
-                            +
-                        </button>
-                        <span>신규</span>
-                        <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="application/pdf"
-                            className="hidden"
-                            onChange={handleFileChange}
-                        />
+            <Header title={`${pageIndex + 1} / ${pageCount}`} />
+            <div className="mt-6 flex justify-center">
+                <div
+                    className="w-11/12 h-[70vh] bg-white rounded-2xl shadow flex items-center justify-center"
+                    onClick={handleClick}
+                    onTouchStart={onTouchStart}
+                    onTouchEnd={onTouchEnd}
+                >
+                    {/* 타이틀 5줄 요약(무조건 5줄 유지, summary.first..fifth) */}
+                    <div className="w-full h-full p-4">
+                        <div>{summary.first ?? ""}</div>
+                        <div>{summary.second ?? ""}</div>
+                        <div>{summary.third ?? ""}</div>
+                        <div>{summary.fourth ?? ""}</div>
+                        <div>{summary.fifth ?? ""}</div>
                     </div>
-
-                    <PostCardList items={items} />
-                </section>
-            </main>
-            <BottomBar />
-            <NewFileModal open={modalOpen} onClose={handleModalClose} onSubmit={handleCreate} />
+                </div>
+            </div>
         </div>
     );
 }
