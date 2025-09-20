@@ -21,6 +21,7 @@ export async function uploadResource(file: File, title: string): Promise<UploadR
                 form,
                 {
                     headers: { "Content-Type": "multipart/form-data", Accept: "*/*" },
+                    timeout: 180000, // 3분
                     transformRequest: (v) => v,
                     responseType: "json",
                     timeoutErrorMessage: "업로드 요청이 시간 초과되었습니다.",
