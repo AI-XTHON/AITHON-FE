@@ -19,7 +19,7 @@ function DataCardBase({ item }: Props) {
             >
                 <div className="w-full h-full flex items-center justify-center">
                     <span className="text-lg">
-                        {item.status === "processing" ? "요약중..." : (item.coverText ?? "")}
+                        {item.status === "processing" ? "요약 완료" : (item.coverText ?? "")}
                     </span>
                 </div>
             </button>
