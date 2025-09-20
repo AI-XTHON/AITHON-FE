@@ -31,14 +31,14 @@ export default function Mypage() {
             })
             .finally(() => { if (alive) setLoading(false) })
         return () => { alive = false }
-        // 주석: useEffect 의존성 배열에서 userId를 제거합니다.
+        //useEffect 의존성 배열에서 userId를 제거합니다.
     }, [navigate])
 
     const nickname = me?.name ?? '닉네임'
     const position = me?.userType ?? '대학생'
 
     const handleSettings = useCallback(() => {
-        // TODO: 설정 페이지로 이동하는 로직 구현
+        // TODO: 설정 페이지로 이동하는 로직 구현 <- 아직 만들지 마
     }, [])
 
     const handleLogout = useCallback(async () => {
