@@ -8,8 +8,7 @@ import '../style.css'
 
 import RecentStudyList from "../components/RecentStudyList"
 import { useCallback, useEffect, useState } from 'react'
-import { getSummaries } from '../api/getSummaries'
-
+import { getSummaries } from '../api/getSummariesRecent'
 
 type StudyItem = {
     id: string
@@ -27,14 +26,16 @@ export default function Home() {
     useEffect(() => {
         (async () => {
             try {
-                const list = await getSummaries()
-                const mapped: StudyItem[] = list.map((s, idx) => ({
-                    id: `summary-${idx + 1}`,
-                    title: '요약',
-                    description: s.summary || s.oneLiner || '',
-                    coverLabel: '표지',
-                    updatedAt: new Date().toISOString(),
-                }))
+                const s = await getSummaries()
+                const mapped: StudyItem[] = s
+                    ? [{
+                        id: `summary-recent`,
+                        title: '요약',
+                        description: s.summary || s.oneLiner || '',
+                        coverLabel: '표지',
+                        updatedAt: new Date().toISOString(),
+                    }]
+                    : []
                 setRecentStudies(mapped)
             } catch {
                 setRecentStudies([])

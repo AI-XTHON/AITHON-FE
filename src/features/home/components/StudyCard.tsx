@@ -10,7 +10,7 @@ interface StudyItem {
 
 export default function StudyCard({ item }: { item: StudyItem }) {
     return (
-        <Link to={`/studies/${item.id}`} className='flex gap-4 mb-4'>
+        <Link to={`/upload/${item.id}`} className='flex gap-4 mb-4'>
             {/* 이거 이미지로 바뀔 수도? */}
             <div className="px-10 py-5 bg-[#D9D9D9]">{item.coverLabel ?? '표지'}</div>
             <div>
