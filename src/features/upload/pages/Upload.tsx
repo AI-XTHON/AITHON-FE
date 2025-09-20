@@ -1,9 +1,10 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 import SearchHeader from "../../../shared/components/SearchHeader";
 import PostCardList from "../components/PostCardList";
 import NewFileModal from "../components/NewFileModal";
 import BottomBar from "../../../shared/components/BottomBar";
 import { uploadResource } from "../api/resources";
+import { getSummaries, type SummaryListItem } from "../api/getSummaries";
 
 type SummaryItem = {
     id: string;
@@ -19,6 +20,25 @@ export default function Upload() {
     const [modalOpen, setModalOpen] = useState(false);
     const [pendingFile, setPendingFile] = useState<File | null>(null);
     const [items, setItems] = useState<SummaryItem[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const list = await getSummaries();
+                const mapped: SummaryItem[] = list.map((x: SummaryListItem, idx) => ({
+                    id: String(x.id ?? crypto.randomUUID()),
+                    title: x.title ?? x.oneliner ?? `요약 ${idx + 1}`,
+                    status: "ready",
+                    coverText: x.oneliner ?? "표지 or 첫페이지",
+                    pages: [],
+                    createdAt: x.createdAt ?? new Date().toISOString(),
+                }));
+                setItems(mapped);
+            } catch (e) {
+                console.error(e);
+            }
+        })();
+    }, []);
 
     const handleNewClick = useCallback(() => {
         fileInputRef.current?.click();
@@ -43,13 +63,15 @@ export default function Upload() {
                 if (!pendingFile) return;
 
                 alert("AI 요약이 시작됩니다. 최대 3분 까지 소요됩니다. 완료 후 팝업이 닫히고 자료가 추가됩니다.");
+
                 // 서버 업로드
                 const resp = await uploadResource(pendingFile, title);
-                const generatedId = typeof resp === "string" ? resp : (resp as any).id ?? crypto.randomUUID();
+                const generatedId =
+                    typeof resp === "string" ? resp : (resp as any).id ?? crypto.randomUUID();
 
+                // 업로드 직후 'processing' 카드 추가
                 const newItem: SummaryItem = {
                     id: String(generatedId),
-
                     title,
                     status: "processing",
                     coverText: "요약중...",
