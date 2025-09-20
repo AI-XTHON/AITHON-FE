@@ -42,9 +42,10 @@ export default function Upload() {
             try {
                 if (!pendingFile) return;
 
-                alert("AI 요약이 시작됩니다. 최대 3분 까지 소요됩니다. 완료 후 팝업이 닫히고 자료가 추가됩니다.");
+
                 // 서버 업로드
                 const resp = await uploadResource(pendingFile, title);
+                alert("AI 요약이 시작됩니다. 최대 3분 까지 소요됩니다. 완료 후 팝업이 닫히고 자료가 추가됩니다.");
                 const generatedId = typeof resp === "string" ? resp : (resp as any).id ?? crypto.randomUUID();
 
                 const newItem: SummaryItem = {
